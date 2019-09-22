@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\VSProjects\\repos\\CBTools_Core\\CBTools_Core\\CBTools_Core.csproj": {}
+  },
+  "projects": {
+    "D:\\VSProjects\\repos\\CBTools_Core\\CBTools_Core\\CBTools_Core.csproj": {
+      "version": "1.0.6",
+      "restore": {
+        "projectUniqueName": "D:\\VSProjects\\repos\\CBTools_Core\\CBTools_Core\\CBTools_Core.csproj",
+        "projectName": "CBTools_Core",
+        "projectPath": "D:\\VSProjects\\repos\\CBTools_Core\\CBTools_Core\\CBTools_Core.csproj",
+        "packagesPath": "C:\\Users\\craig.balfour\\.nuget\\packages\\",
+        "outputPath": "D:\\VSProjects\\repos\\CBTools_Core\\CBTools_Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\craig.balfour\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\VSProjects\\LocalPackages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<# Type[] types = new[] {
+    typeof(Int16), typeof(Int32), typeof(Int64),
+    typeof(UInt16), typeof(UInt32), typeof(UInt64),
+	typeof(byte),typeof(sbyte),
+	typeof(double), typeof(float),
+	typeof(decimal)
+    };
+#>
+using System;
+
+namespace CBTools_Core.IO
+{
+	public static partial class ConsoleRead
+	{
+		<# foreach (var type in types) { 
+		#>
+		public static <#= type.Name #> Read<#= type.Name #> (bool showMessageIfInvalid = true)
+		{
+			if (<#= type.Name #>.TryParse(Console.ReadLine(), out <#= type.Name #> result))
+				return result;
+			else
+			{
+				if (showMessageIfInvalid)
+					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not <#= type.Name #>");
+				return Read<#= type.Name #>(showMessageIfInvalid);
+			}
+		}
+
+		public static <#= type.Name #> Read<#= type.Name #>(in <#= type.Name #> max, bool showMessageIfInvalid = true)
+		{
+			if (<#= type.Name #>.TryParse(Console.ReadLine(), out <#= type.Name #> result))
+			{
+				if(result <= max)
+					return result;
+
+				else if (showMessageIfInvalid)
+					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+			}
+			else if (showMessageIfInvalid)
+					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a <#= type.Name #>");
+            
+			return Read<#= type.Name #>(max, showMessageIfInvalid);
+		}
+
+		<#
+		} #>
+	}
+}

@@ -1,0 +1,9 @@
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\bin\Release\netcoreapp2.2\CBTools_Core.deps.json
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\bin\Release\netcoreapp2.2\CBTools_Core.dll
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\bin\Release\netcoreapp2.2\CBTools_Core.pdb
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\obj\Release\netcoreapp2.2\CBTools_Core.csprojAssemblyReference.cache
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\obj\Release\netcoreapp2.2\CBTools_Core.csproj.CoreCompileInputs.cache
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\obj\Release\netcoreapp2.2\CBTools_Core.AssemblyInfoInputs.cache
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\obj\Release\netcoreapp2.2\CBTools_Core.AssemblyInfo.cs
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\obj\Release\netcoreapp2.2\CBTools_Core.dll
+D:\VSProjects\repos\CBTools_Core\CBTools_Core\obj\Release\netcoreapp2.2\CBTools_Core.pdb

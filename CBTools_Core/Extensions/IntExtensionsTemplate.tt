@@ -1,0 +1,24 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<# Type[] types = new[] {
+    typeof(Int16), typeof(int), typeof(Int64),
+    typeof(UInt16), typeof(UInt32), typeof(UInt64),
+	typeof(byte),typeof(sbyte)
+    };
+#>
+using System;
+
+namespace CBTools_Core.Extensions
+{
+	public static partial class IntExtensions {
+		<# foreach (var type in types) { 
+		#>
+public static bool IsEven (this <#= type.Name #> num) => (num & 1) == 0;
+
+		public static bool AsBool(this  <#= type.Name #> num) => num != 0;
+
+		<#
+		} #>
+	}
+}

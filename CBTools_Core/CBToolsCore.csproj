@@ -1,0 +1,101 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>Enable</Nullable>
+    <Authors>balfourcraig</Authors>
+    <Description>Collection of functions and classes for quality of life. Nothing amazing, but useful.
+
+Eg.
+
+Extensions for char to match strings (to upper etc). Strip characters from string, console read/write helpers for writing coloured text or reading numbers etc. Simple colour struct. Generic Trie implementation. Double dictionary. HTML string helpers.
+
+And many, many more!</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.6</Version>
+    <PackageReleaseNotes>LazyAsync class. Provides a wrapper around the Lazy class to allow lazy loaded async data. For example, only call an api when you really need it, otherwise don't bother.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
+    <FileVersion>1.0.6.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Extensions\HTMLTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HTMLTemplate.tt</DependentUpon>
+    </None>
+    <None Include="Extensions\IntExtensionsTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IntExtensionsTemplate.tt</DependentUpon>
+    </None>
+    <None Include="IO\ReadNumTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReadNumTemplate.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>mscorlib</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>System.Core</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Extensions\HTMLTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HTMLTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Extensions\IntExtensionsTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IntExtensionsTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IO\ReadNumTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReadNumTemplate.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Extensions\HTMLTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HTMLTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Extensions\IntExtensionsTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IntExtensionsTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="IO\ReadNumTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReadNumTemplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
