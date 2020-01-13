@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace CBTools_Core.Collections
-{
-    public class TwinDictionary<X, Y> : IDictionary<X,Y>
-    {
+namespace CBTools_Core.Collections {
+    public class TwinDictionary<X, Y> : IDictionary<X, Y> {
         private readonly Dictionary<X, Y> forwards;
         private readonly Dictionary<Y, X> backwards;
 
@@ -27,142 +25,108 @@ namespace CBTools_Core.Collections
 
         public bool IsReadOnly => false;
 
-        public Y this[X key]
-        {
-            get
-            {
-                return forwards[key];
-            }
-            set
-            {
-                backwards.Remove(value);
+        public Y this[X key] {
+            get => forwards[key];
+            set {
+                _ = backwards.Remove(value);
                 backwards.Add(value, key);
                 forwards[key] = value;
             }
         }
-        public X this[Y key]
-        {
-            get
-            {
-                return backwards[key];
-            }
-            set
-            {
-                forwards.Remove(value);
+        public X this[Y key] {
+            get => backwards[key];
+            set {
+                _ = forwards.Remove(value);
                 forwards.Add(value, key);
                 backwards[key] = value;
             }
         }
 
-        public TwinDictionary()
-        {
+        public TwinDictionary() {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>();
             backwards = new Dictionary<Y, X>();
         }
 
-        public TwinDictionary(int capacity)
-        {
+        public TwinDictionary(int capacity) {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>(capacity);
             backwards = new Dictionary<Y, X>(capacity);
         }
 
-        public TwinDictionary(IDictionary<X,Y> collection)
-        {
+        public TwinDictionary(IDictionary<X, Y> collection) {
             forwards = new Dictionary<X, Y>(collection);
             backwards = new Dictionary<Y, X>(collection.Count);
             foreach (KeyValuePair<X, Y> pair in collection)
                 backwards.Add(pair.Value, pair.Key);
         }
 
-        public TwinDictionary(IDictionary<Y, X> collection)
-        {
+        public TwinDictionary(IDictionary<Y, X> collection) {
             backwards = new Dictionary<Y, X>(collection);
             forwards = new Dictionary<X, Y>(collection.Count);
             foreach (KeyValuePair<Y, X> pair in collection)
                 forwards.Add(pair.Value, pair.Key);
         }
 
-        public TwinDictionary(IEqualityComparer<X> forwardsComparer)
-        {
+        public TwinDictionary(IEqualityComparer<X> forwardsComparer) {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>(forwardsComparer);
             backwards = new Dictionary<Y, X>();
         }
 
-        public TwinDictionary(IEqualityComparer<Y> backwardsComparer)
-        {
+        public TwinDictionary(IEqualityComparer<Y> backwardsComparer) {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>();
             backwards = new Dictionary<Y, X>(backwardsComparer);
         }
 
-        public TwinDictionary(IEqualityComparer<X> forwardsComparer, IEqualityComparer<Y> backwardsComparer)
-        {
+        public TwinDictionary(IEqualityComparer<X> forwardsComparer, IEqualityComparer<Y> backwardsComparer) {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>(forwardsComparer);
             backwards = new Dictionary<Y, X>(backwardsComparer);
         }
 
-        public TwinDictionary(int capacity, IEqualityComparer<X> forwardsComparer)
-        {
+        public TwinDictionary(int capacity, IEqualityComparer<X> forwardsComparer) {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>(capacity, forwardsComparer);
             backwards = new Dictionary<Y, X>(capacity);
         }
 
-        public TwinDictionary(int capacity, IEqualityComparer<Y> backwardsComparer)
-        {
+        public TwinDictionary(int capacity, IEqualityComparer<Y> backwardsComparer) {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>(capacity);
             backwards = new Dictionary<Y, X>(capacity, backwardsComparer);
         }
 
-        public TwinDictionary(int capacity, IEqualityComparer<X> forwardsComparer, IEqualityComparer<Y> backwardsComparer)
-        {
+        public TwinDictionary(int capacity, IEqualityComparer<X> forwardsComparer, IEqualityComparer<Y> backwardsComparer) {
             if (typeof(X) == typeof(Y))
                 throw new ArgumentException(typeError);
             forwards = new Dictionary<X, Y>(capacity, forwardsComparer);
             backwards = new Dictionary<Y, X>(capacity, backwardsComparer);
         }
 
-        public void Add(X key, Y value)
-        {
+        public void Add(X key, Y value) {
             forwards.Add(key, value);
             backwards.Add(value, key);
         }
         public void Add(Y key, X value) => Add(value, key);
 
-        public bool Remove(X key)
-        {
-            if (forwards.TryGetValue(key, out Y val))
-                return backwards.Remove(val) && forwards.Remove(key);
-            else
-                return false;
-        }
-        public bool Remove(Y key)
-        {
-            if (backwards.TryGetValue(key, out X val))
-                return forwards.Remove(val) && backwards.Remove(key);
-            else
-                return false;
-        }
+        public bool Remove(X key) => forwards.TryGetValue(key, out Y val) ? backwards.Remove(val) && forwards.Remove(key) : false;
+        public bool Remove(Y key) => backwards.TryGetValue(key, out X val) ? forwards.Remove(val) && backwards.Remove(key) : false;
 
         public bool TryGetValue(X item1, out Y item2) => forwards.TryGetValue(item1, out item2);
         public bool TryGetValue(Y item1, out X item2) => backwards.TryGetValue(item1, out item2);
 
         public bool ContainsKey(X key) => forwards.ContainsKey(key);
 
-        public void Clear()
-        {
+        public void Clear() {
             forwards.Clear();
             backwards.Clear();
         }
@@ -179,12 +143,10 @@ namespace CBTools_Core.Collections
         /// </summary>
         /// <param name="array"></param>
         /// <param name="arrayIndex"></param>
-        public void CopyTo(KeyValuePair<X, Y>[] array, int arrayIndex)
-        {
+        public void CopyTo(KeyValuePair<X, Y>[] array, int arrayIndex) {
             array = new KeyValuePair<X, Y>[forwards.Count];
             int i = 0;
-            foreach(KeyValuePair<X,Y> item in forwards)
-            {
+            foreach (KeyValuePair<X, Y> item in forwards) {
                 array[i++] = item;
             }
         }
@@ -194,10 +156,7 @@ namespace CBTools_Core.Collections
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool Remove(KeyValuePair<X, Y> item)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Remove(KeyValuePair<X, Y> item) => throw new NotImplementedException();
 
         public IEnumerator<KeyValuePair<X, Y>> GetEnumerator() => forwards.GetEnumerator();
 

@@ -1,10 +1,8 @@
 ﻿using System;
 
-namespace CBTools_Core
-{
+namespace CBTools_Core {
     [Flags]
-    enum Days : byte
-    {
+    enum Days : byte {
         None = 0,
         Monday = 0b_0000_0001,
         Tuesday = 0b_0000_0010,

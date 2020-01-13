@@ -1,8 +1,6 @@
-﻿namespace CBTools_Core
-{
+﻿namespace CBTools_Core {
 #nullable disable
-    public interface IOption<T> 
-    {
+    public interface IOption<T> {
         /// <summary>
         /// Returns true if type is Some, or OptionStruct with type. Otherwise false. Value is in out parameter if exists
         /// </summary>

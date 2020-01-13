@@ -1,0 +1,32 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<# Type[] types = new[] {
+    typeof(short), typeof(int), typeof(Int64),
+    typeof(UInt16), typeof(UInt32),
+	typeof(byte),typeof(sbyte)
+    };
+#>
+using System;
+
+namespace CBTools_Core.Extensions
+{
+	public static partial class IntExtensions {
+		<# foreach (var type in types) { 
+		#>
+public static string ToBinaryString(this <#= type.Name #> num) => Convert.ToString(num, 2).PadLeft(sizeof(<#= type.Name #>) * 8, '0');
+
+		public static string ToBinaryString(this <#= type.Name #> num, char delimeter) {
+            char[] chars = new char[sizeof(<#= type.Name #>) * 8 + sizeof(<#= type.Name #>) * 2];
+            for (int i = 0, inner = 0; inner < sizeof(<#= type.Name #>) * 8; i++, inner++) {
+                if (inner > 0 && inner % 4 == 0)
+                    chars[chars.Length - 1 - i++] = delimeter;
+                chars[chars.Length - 1 - i] = (char)(((num >> inner) & 0b_1) + '0');
+            }
+            chars[0] = delimeter;
+            return "0b" + new string(chars);
+        }
+		<#
+		} #>
+	}
+}

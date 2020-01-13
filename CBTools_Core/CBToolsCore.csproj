@@ -13,10 +13,15 @@ Extensions for char to match strings (to upper etc). Strip characters from strin
 
 And many, many more!</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.6</Version>
-    <PackageReleaseNotes>LazyAsync class. Provides a wrapper around the Lazy class to allow lazy loaded async data. For example, only call an api when you really need it, otherwise don't bother.</PackageReleaseNotes>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
-    <FileVersion>1.0.6.0</FileVersion>
+    <Version>1.0.8</Version>
+    <PackageReleaseNotes>Added Fraction struct. Stores fractions as numerator/denominator pairs, both of which are integers. Provides overrides for the common operators, and implicit/explicit casts where expected. This is mostly an interest thing, the ones in System.Numerics and other math libraries will be better.
+Added a MapAction extension method similar to ForEach, except that it enumerates the list right away</PackageReleaseNotes>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
+    <FileVersion>1.0.8.0</FileVersion>
+    <PackageId>CBTools_Core</PackageId>
+    <Product>CBTools_Core</Product>
+    <AssemblyName>CBTools_Core</AssemblyName>
+    <RootNamespace>CBTools_Core</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -41,6 +46,11 @@ And many, many more!</Description>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IntExtensionsTemplate.tt</DependentUpon>
+    </None>
+    <None Include="Extensions\ToBinaryTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ToBinaryTemplate.tt</DependentUpon>
     </None>
     <None Include="IO\ReadNumTemplate.cs">
       <DesignTime>True</DesignTime>
@@ -76,6 +86,11 @@ And many, many more!</Description>
       <AutoGen>True</AutoGen>
       <DependentUpon>IntExtensionsTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="Extensions\ToBinaryTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ToBinaryTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="IO\ReadNumTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -91,6 +106,10 @@ And many, many more!</Description>
     <None Update="Extensions\IntExtensionsTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IntExtensionsTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Extensions\ToBinaryTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ToBinaryTemplate.cs</LastGenOutput>
     </None>
     <None Update="IO\ReadNumTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

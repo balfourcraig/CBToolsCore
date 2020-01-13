@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace CBTools_Core.Untyped
-{
+namespace CBTools_Core.Untyped {
     [StructLayout(LayoutKind.Explicit, Size = 8)]
-    public readonly struct Size8 : IEquatable<Size8>, IEquatable<long>, IEquatable<ulong>, IEquatable<double>
-    {
+    public readonly struct Size8 : IEquatable<Size8>, IEquatable<long>, IEquatable<ulong>, IEquatable<double> {
         /// <summary>
         /// Interpret 8 bytes as Int64
         /// </summary>
@@ -26,22 +22,19 @@ namespace CBTools_Core.Untyped
         [FieldOffset(0)]
         public readonly double asDouble;
 
-        public Size8(long l)
-        {
+        public Size8(long l) {
             this.asDouble = default;
             this.asULong = default;
             this.asLong = l;
         }
 
-        public Size8(ulong ul)
-        {
+        public Size8(ulong ul) {
             this.asDouble = default;
             this.asLong = default;
             this.asULong = ul;
         }
 
-        public Size8(double d)
-        {
+        public Size8(double d) {
             this.asULong = default;
             this.asLong = default;
             this.asDouble = d;
@@ -52,19 +45,39 @@ namespace CBTools_Core.Untyped
         public bool Equals(ulong other) => asULong == other;
         public bool Equals(double other) => asDouble == other;
 
-        public static bool operator ==(Size8 x, Size8 y) => x.asLong == y.asLong;
-        public static bool operator ==(Size8 x, long y) => x.asLong == y;
-        public static bool operator ==(Size8 x, ulong y) => x.asULong == y;
-        public static bool operator ==(Size8 x, double y) => x.asDouble == y;
+        public static bool operator ==(Size8 x, Size8 y) {
+            return x.asLong == y.asLong;
+        }
 
-        public static bool operator !=(Size8 x, Size8 y) => !(x.asLong == y.asLong);
-        public static bool operator !=(Size8 x, long y) => !(x.asLong == y);
-        public static bool operator !=(Size8 x, ulong y) => !(x.asULong == y);
-        public static bool operator !=(Size8 x, double y) => !(x.asDouble == y);
+        public static bool operator ==(Size8 x, long y) {
+            return x.asLong == y;
+        }
 
+        public static bool operator ==(Size8 x, ulong y) {
+            return x.asULong == y;
+        }
 
-        public override bool Equals(object obj)
-        {
+        public static bool operator ==(Size8 x, double y) {
+            return x.asDouble == y;
+        }
+
+        public static bool operator !=(Size8 x, Size8 y) {
+            return !(x.asLong == y.asLong);
+        }
+
+        public static bool operator !=(Size8 x, long y) {
+            return !(x.asLong == y);
+        }
+
+        public static bool operator !=(Size8 x, ulong y) {
+            return !(x.asULong == y);
+        }
+
+        public static bool operator !=(Size8 x, double y) {
+            return !(x.asDouble == y);
+        }
+
+        public override bool Equals(object obj) {
             if (obj == null)
                 return false;
             else if (obj is Size8)
@@ -73,9 +86,6 @@ namespace CBTools_Core.Untyped
                 return false;
         }
 
-        public override int GetHashCode()
-        {
-            return asLong.GetHashCode();
-        }
+        public override int GetHashCode() => asLong.GetHashCode();
     }
 }

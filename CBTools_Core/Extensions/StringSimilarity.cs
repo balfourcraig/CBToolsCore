@@ -1,78 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CBTools_Core.Extensions
-{
-    public static class StringSimilarity
-    {
-        private readonly struct LetterPair : IEquatable<LetterPair>
-        {
+namespace CBTools_Core.Extensions {
+    public static class StringSimilarity {
+        private readonly struct LetterPair : IEquatable<LetterPair> {
             public readonly char c1;
             public readonly char c2;
 
-            public LetterPair(char c1, char c2)
-            {
+            public LetterPair(char c1, char c2) {
                 this.c1 = c1;
                 this.c2 = c2;
             }
 
-            public override bool Equals(object obj)
-            {
+            public override bool Equals(object obj) {
                 if (obj == null || !(obj is LetterPair))
                     return false;
                 else
                     return ((LetterPair)obj).c1 == c1 && ((LetterPair)obj).c2 == c2;
             }
 
-            public static bool operator ==(LetterPair p1, LetterPair p2)
-            {
+            public static bool operator ==(LetterPair p1, LetterPair p2) {
                 return p1.c1 == p2.c1 && p1.c2 == p2.c2;
             }
 
-            public static bool operator !=(LetterPair p1, LetterPair p2)
-            {
+            public static bool operator !=(LetterPair p1, LetterPair p2) {
                 return !(p1 == p2);
             }
 
-            public override int GetHashCode()
-            {
-                return c1 | (c2 << 8);//TODO: this is probably not a great hash code, but nothing uses it... yet
-                //return base.GetHashCode();
-            }
+            public override int GetHashCode() => c1 | (c2 << 8);//TODO: this is probably not a great hash code, but nothing uses it... yet//return base.GetHashCode();
 
-            public bool Equals(LetterPair other)
-            {
-                return other.c1 == c1 && other.c2 == c2;
-            }
+            public bool Equals(LetterPair other) => other.c1 == c1 && other.c2 == c2;
         }
 
         public static float Similarity(this string s, string str, bool caseSensitive = false) => CompareStrings(s, str, caseSensitive);
 
-        public static float CompareStrings(string str1, string str2, bool caseSensitive)
-        {
+        public static float CompareStrings(string str1, string str2, bool caseSensitive) {
             if (string.IsNullOrWhiteSpace(str1) || string.IsNullOrWhiteSpace(str2))
                 return 0;
 
             Span<LetterPair> pairs1 = GetAllPairs(caseSensitive ? str1 : str1.ToUpperInvariant());
             Span<LetterPair> pairs2 = GetAllPairs(caseSensitive ? str2 : str2.ToUpperInvariant());
 
-            if (pairs1.Length == 0 || pairs2.Length == 0)
+            if (pairs1.Length == 0 || pairs2.Length == 0) {
                 return 0;
-            else
-            {
+            }
+            else {
                 bool[] usedPairs = new bool[pairs2.Length];
                 int intersection = 0;
 
                 int union = pairs1.Length + pairs2.Length;
 
-                for (int i = 0; i < pairs1.Length; i++)
-                {
+                for (int i = 0; i < pairs1.Length; i++) {
                     LetterPair pair1 = pairs1[i];
-                    for (int j = 0; j < pairs2.Length; j++)
-                    {
-                        if (!usedPairs[j] && pair1 == pairs2[j])
-                        {
+                    for (int j = 0; j < pairs2.Length; j++) {
+                        if (!usedPairs[j] && pair1 == pairs2[j]) {
                             intersection++;
                             usedPairs[j] = true;
                             break;

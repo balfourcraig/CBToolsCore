@@ -5,10 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CBTools_Core.Collections
-{
-    public class TrieSet : IEnumerable<string>
-    {
+namespace CBTools_Core.Collections {
+    public class TrieSet : IEnumerable<string> {
         public readonly bool caseSensitive;
         public readonly char letter;
         public readonly Dictionary<char, TrieSet> children;
@@ -18,28 +16,24 @@ namespace CBTools_Core.Collections
 
         public bool IsLeaf => children.Count == 0;
         public bool IsRoot => parent == null;
-        public string Word
-        {
-            get
-            {
+        public string Word {
+            get {
                 Span<char> word = new char[depth];
                 return BuildWord(ref word);
             }
         }
 
-        private string BuildWord(ref Span<char> word)
-        {
-            if (parent == null)
+        private string BuildWord(ref Span<char> word) {
+            if (parent == null) {
                 return word.ToString();
-            else
-            {
+            }
+            else {
                 word[depth - 1] = letter;
                 return parent.BuildWord(ref word);
             }
         }
 
-        public TrieSet(bool caseSensitive = false)
-        {
+        public TrieSet(bool caseSensitive = false) {
             this.letter = '\0';
             this.depth = 0;
             this.parent = null;
@@ -48,8 +42,7 @@ namespace CBTools_Core.Collections
             this.caseSensitive = caseSensitive;
         }
 
-        internal TrieSet(char letter, TrieSet parent)
-        {
+        internal TrieSet(char letter, TrieSet parent) {
             this.parent = parent;
             this.depth = parent.depth + 1;
             this.children = new Dictionary<char, TrieSet>();
@@ -60,26 +53,21 @@ namespace CBTools_Core.Collections
 
         public IEnumerable<string> BreadthFirstValidWords() => BreadthFirstValidWords(int.MaxValue);
 
-        public IEnumerable<string> BreadthFirstValidWords(int maxWords)
-        {
-            Queue<TrieSet> q = new Queue<TrieSet>();
-            HashSet<TrieSet> discovered = new HashSet<TrieSet>();
+        public IEnumerable<string> BreadthFirstValidWords(int maxWords) {
+            var q = new Queue<TrieSet>();
+            var discovered = new HashSet<TrieSet>();
 
             q.Enqueue(this);
             discovered.Add(this);
 
             TrieSet current;
-            while (q.Count > 0 && maxWords > 0)
-            {
+            while (q.Count > 0 && maxWords > 0) {
                 current = q.Dequeue();
-                foreach (TrieSet child in current.children.Values)
-                {
-                    if (!discovered.Contains(child))
-                    {
+                foreach (TrieSet child in current.children.Values) {
+                    if (!discovered.Contains(child)) {
                         discovered.Add(child);
                         q.Enqueue(child);
-                        if (child.completesString)
-                        {
+                        if (child.completesString) {
                             maxWords--;
                             yield return child.Word;
                         }
@@ -88,17 +76,14 @@ namespace CBTools_Core.Collections
             }
         }
 
-        public int MaxDepth(ReadOnlySpan<char> prefix)
-        {
-            if (prefix.Length == 1)
-            {
+        public int MaxDepth(ReadOnlySpan<char> prefix) {
+            if (prefix.Length == 1) {
                 if (this.children.ContainsKey(caseSensitive ? prefix[0] : char.ToUpperInvariant(prefix[0])))
                     return 1;
                 else
                     return 0;
             }
-            else
-            {
+            else {
                 if (this.children.TryGetValue(caseSensitive ? prefix[0] : char.ToUpperInvariant(prefix[0]), out TrieSet set))
                     return 1 + set.MaxDepth(prefix.Slice(1));
                 else
@@ -106,40 +91,32 @@ namespace CBTools_Core.Collections
             }
         }
 
-        public void Add(ReadOnlySpan<char> word)
-        {
-            if (word.Length == 0)
-            {
+        public void Add(ReadOnlySpan<char> word) {
+            if (word.Length == 0) {
                 this.completesString = true;
             }
-            else
-            {
+            else {
                 char letter = caseSensitive ? word[0] : char.ToUpperInvariant(word[0]);
-                if (!children.ContainsKey(letter))
-                {
+                if (!children.ContainsKey(letter)) {
                     children.Add(letter, new TrieSet(letter, this));
                 }
                 children[letter].Add(word.Slice(1));
             }
         }
 
-        public void Remove(ReadOnlySpan<char> word)
-        {
+        public void Remove(ReadOnlySpan<char> word) {
             TrieSet? t = TraverseTo(word);
-            if (t != null)
-            {
+            if (t != null) {
                 t.completesString = false;
 
-                while (t.children.Count == 0 && !t.completesString && t.parent != null)
-                {
+                while (t.children.Count == 0 && !t.completesString && t.parent != null) {
                     t.parent.children.Remove(t.letter);
                     t = t.parent;
                 }
             }
         }
 
-        public TrieSet? TraverseTo(ReadOnlySpan<char> prefix)
-        {
+        public TrieSet? TraverseTo(ReadOnlySpan<char> prefix) {
             if (prefix.Length == 0)
                 return this;
 
@@ -152,8 +129,7 @@ namespace CBTools_Core.Collections
                 return null;
         }
 
-        public bool Contains(ReadOnlySpan<char> prefix)
-        {
+        public bool Contains(ReadOnlySpan<char> prefix) {
             if (prefix.Length == 0)
                 return completesString;
             else if (IsLeaf)
@@ -183,13 +159,10 @@ namespace CBTools_Core.Collections
             ConsoleColor.DarkRed
         };
 
-        public void Print(int depth = 0)
-        {
+        public void Print(int depth = 0) {
             int c = 0;
-            if (depth > 0)
-            {
-                for (int i = 0; i < depth; i++)
-                {
+            if (depth > 0) {
+                for (int i = 0; i < depth; i++) {
 
                     while (c > colors.Length - 1)
                         c -= colors.Length;
@@ -203,20 +176,13 @@ namespace CBTools_Core.Collections
 
             ConsoleWrite.WriteLinesColored(this.completesString ? colors[c] : darkColors[c], (IsLeaf ? " " : " > ") + this.letter);
 
-            foreach (TrieSet child in children.Values.OrderBy(x => x.children.Count))
-            {
+            foreach (TrieSet child in children.Values.OrderBy(x => x.children.Count)) {
                 child.Print(depth + 1);
             }
         }
 
-        public IEnumerator<string> GetEnumerator()
-        {
-            return BreadthFirstValidWords().GetEnumerator();
-        }
+        public IEnumerator<string> GetEnumerator() => BreadthFirstValidWords().GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

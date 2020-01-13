@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace CBTools_Core.Extensions
-{
-    public static partial class HTML
-    {
-        private readonly ref struct TextPos
-        {
+namespace CBTools_Core.Extensions {
+    public static partial class HTML {
+        private readonly ref struct TextPos {
             public readonly ushort real;
             public readonly ushort inner;
 
-            public TextPos(ushort real, ushort inner)
-            {
+            public TextPos(ushort real, ushort inner) {
                 this.real = real;
                 this.inner = inner;
             }
@@ -24,24 +18,16 @@ namespace CBTools_Core.Extensions
         /// <param name="text"></param>
         /// <param name="maxLength"></param>
         /// <returns></returns>
-        public static string SubstringHTML(this string text, int maxLength)
-        {
-            TextPos pos = new TextPos(0, 0);
+        public static string SubstringHTML(this string text, int maxLength) {
+            var pos = new TextPos(0, 0);
 
-            while (pos.real < text.Length && pos.inner < maxLength)
-            {
-                switch (text[pos.real])
+            while (pos.real < text.Length && pos.inner < maxLength) {
+                pos = text[pos.real] switch
                 {
-                    case '<':
-                        pos = SkipUntil(pos, in text, '>', false);
-                        break;
-                    case '&':
-                        pos = SkipUntil(pos, in text, ';', true);
-                        break;
-                    default:
-                        pos = Advance(pos, true);
-                        break;
-                }
+                    '<' => SkipUntil(pos, in text, '>', false),
+                    '&' => SkipUntil(pos, in text, ';', true),
+                    _ => Advance(pos, true),
+                };
             }
             string subs = text.Substring(0, pos.real);
             if (subs.Length < text.Length)
@@ -51,8 +37,7 @@ namespace CBTools_Core.Extensions
 
         private static TextPos Advance(in TextPos pos, bool inner) => new TextPos((ushort)(pos.real + 1), (ushort)(pos.inner + (inner ? 1 : 0)));
 
-        private static TextPos SkipUntil(TextPos pos, in string text, char end, bool hasInnerLength)
-        {
+        private static TextPos SkipUntil(TextPos pos, in string text, char end, bool hasInnerLength) {
             while (pos.real < text.Length && text[pos.real] != end)
                 pos = Advance(pos, false);
             if (pos.real < text.Length)
@@ -67,21 +52,17 @@ namespace CBTools_Core.Extensions
         /// <param name="contents">innerHTML</param>
         /// <param name="attributes">Array of string tuples for attributes, where the first element is the attribute name, and second is the value.</param>
         /// <returns></returns>
-        public static string Element(string elementType, string contents, params (string atr, string val)[]? attributes)
-        {
-            if (attributes == null || attributes.Length == 0)
-            {
+        public static string Element(string elementType, string contents, params (string atr, string val)[]? attributes) {
+            if (attributes == null || attributes.Length == 0) {
                 return "<" + elementType + ">" + contents + "</" + elementType + ">";
             }
-            else
-            {
+            else {
                 string el = "<" + elementType;
-                foreach ((string, string) tup in attributes)
-                {
+                foreach ((string, string) tup in attributes) {
                     (string atr, string val) = tup;
                     el += " " + atr + "=\"" + val + "\"";
                 }
-                    
+
 
                 el += ">"
                 + contents
@@ -98,16 +79,14 @@ namespace CBTools_Core.Extensions
         /// <param name="elementType"></param>
         /// <param name="attributes">Array of string tuples for attributes, where the first element is the attribute name, and second is the value.</param>
         /// <returns></returns>
-        public static string ElementSelfClosing(string elementType, params (string atr, string val)[]? attributes)
-        {
-            if (attributes == null || attributes.Length == 0)
+        public static string ElementSelfClosing(string elementType, params (string atr, string val)[]? attributes) {
+            if (attributes == null || attributes.Length == 0) {
                 return "<" + elementType + "/>";
-            else
-            {
+            }
+            else {
                 string el = "<" + elementType;
 
-                foreach ((string, string) tup in attributes)
-                {
+                foreach ((string, string) tup in attributes) {
                     (string atr, string val) = tup;
                     el += " " + atr + "=\"" + val + "\"";
                 }
@@ -129,11 +108,9 @@ namespace CBTools_Core.Extensions
         /// <returns></returns>
 
 
-        public static string Ul(IEnumerable<string> lines)
-        {
+        public static string Ul(IEnumerable<string> lines) {
             string html = "<ul>";
-            foreach (string li in lines)
-            {
+            foreach (string li in lines) {
                 html += Li(li);
             }
             html += "</ul>";
@@ -141,11 +118,9 @@ namespace CBTools_Core.Extensions
         }
 
 
-        public static string Ol(IEnumerable<string> lines)
-        {
+        public static string Ol(IEnumerable<string> lines) {
             string html = "<ol>";
-            foreach (string li in lines)
-            {
+            foreach (string li in lines) {
                 html += Li(li);
             }
             html += "</ol>";
@@ -155,7 +130,7 @@ namespace CBTools_Core.Extensions
         public static string Img(string src, string alt, params (string atr, string val)[]? attributes) => ElementSelfClosing("img", CombineAttributes(attributes, ("src", src), ("alt", alt)));
 
         public static string A(string href, string? displayText = null, params (string atr, string val)[] attributes)
-            => Element(contents: string.IsNullOrWhiteSpace(displayText) ? href : displayText, elementType: "a", attributes: CombineAttributes(attributes, ("href", href)));
+            => Element(contents: string.IsNullOrWhiteSpace(displayText) ? href : displayText!, elementType: "a", attributes: CombineAttributes(attributes, ("href", href)));
 
         //public static string Div(string contents, params (string, string)[] attributes) => Element("div", contents, attributes);
         public static string Phone(string number, params (string atr, string val)[] attributes) => "Phone: " + Tel(number.Trim().Replace("(", "").Replace(")", "").Replace("ext", ".").Replace(" ", "-"), number, attributes);
@@ -163,13 +138,10 @@ namespace CBTools_Core.Extensions
 
 
 
-        public static string Tel(string hrefNumber, string? displayNumber = null, params (string atr, string val)[] attributes)
-        {
-            if (string.IsNullOrWhiteSpace(displayNumber))
-            {
+        public static string Tel(string hrefNumber, string? displayNumber = null, params (string atr, string val)[] attributes) {
+            if (string.IsNullOrWhiteSpace(displayNumber)) {
                 displayNumber = hrefNumber.Replace('-', ' ');
-                if (displayNumber.Length > 3 && displayNumber[0] == '0' && displayNumber[2] == ' ')
-                {
+                if (displayNumber.Length > 3 && displayNumber[0] == '0' && displayNumber[2] == ' ') {
                     displayNumber = "(" + displayNumber.Substring(0, 2) + ")" + displayNumber.Substring(2);
                 }
             }
@@ -182,8 +154,7 @@ namespace CBTools_Core.Extensions
         public static string Mailto(string href, string? displayText = null, params (string atr, string val)[] attributes) => A("mailto:" + href, displayText ?? href, attributes);
 
 
-        public static string Table(string[,] items, bool firstRowIsHeader = false, string? style = null, string? @class = null)
-        {
+        public static string Table(string[,] items, bool firstRowIsHeader = false, string? style = null, string? @class = null) {
             string html = "<table"
                 + (string.IsNullOrWhiteSpace(style) ? ">" : " style=\"" + style + "\">")
                 + (string.IsNullOrWhiteSpace(@class) ? "" : " class=\"" + @class + "\"")
@@ -192,8 +163,7 @@ namespace CBTools_Core.Extensions
             if (firstRowIsHeader)//Table has a heading row, add that
             {
                 html += "<thead><tr>";
-                for (int i = 0; i < items.GetLength(0); i++)
-                {
+                for (int i = 0; i < items.GetLength(0); i++) {
                     html += Element("th", items[i, 0]);
                 }
                 html += "</tr></thead>";
@@ -201,11 +171,9 @@ namespace CBTools_Core.Extensions
 
             html += "<tbody>";
 
-            for (int y = (firstRowIsHeader ? 1 : 0); y < items.GetLength(1); y++)
-            {
+            for (int y = (firstRowIsHeader ? 1 : 0); y < items.GetLength(1); y++) {
                 html += "<tr>";
-                for (int x = 0; x < items.GetLength(0); x++)
-                {
+                for (int x = 0; x < items.GetLength(0); x++) {
                     html += Element("td", items[x, y]);
                 }
                 html += "</tr>";
@@ -222,28 +190,28 @@ namespace CBTools_Core.Extensions
         //    return HTMLButton(displayText, value, $"ButtonAction(\'{value}\',\'{displayText}\')", null, "fadeable button btn" + (string.IsNullOrWhiteSpace(@class) ? "" : " " + @class));
         //}
 
-        private static (string, string)[]? CombineAttributes((string atr, string val)[]? userAttributes, params (string atr, string val)[]? attributes)
-        {
-            if ((userAttributes == null || userAttributes.Length == 0) && (attributes == null || attributes.Length == 0))
+        private static (string, string)[]? CombineAttributes((string atr, string val)[]? userAttributes, params (string atr, string val)[]? attributes) {
+            if ((userAttributes == null || userAttributes.Length == 0) && (attributes == null || attributes.Length == 0)) {
                 return null;
-            else
-            {
-                List<(string, string)> atr = new List<(string, string)>();
+            }
+            else {
+                var atr = new List<(string, string)>();
 
                 if (userAttributes != null)
                     atr.AddRange(userAttributes);
 
-                if (attributes != null)
-                    foreach ((string, string) at in attributes)
+                if (attributes != null) {
+                    foreach ((string, string) at in attributes) {
                         if (!string.IsNullOrWhiteSpace(at.Item2))
                             atr.Add(at);
+                    }
+                }
 
                 return atr.ToArray();
             }
         }
 
-        public static string Button(string contents, string value, string type, params (string atr, string val)[] attributes)
-        {
+        public static string Button(string contents, string value, string type, params (string atr, string val)[] attributes) {
             return Element(
                 elementType: "button",
                 contents: contents,
@@ -257,12 +225,10 @@ namespace CBTools_Core.Extensions
         //    return Element("script", contents);
         //}
 
-        public static string Style(params (string style, string value)[] styles)
-        {
+        public static string Style(params (string style, string value)[] styles) {
             string html = "";
 
-            foreach ((string, string)tup in styles)
-            {
+            foreach ((string, string) tup in styles) {
                 (string style, string value) = tup;
                 html += Style(style, value);
             }
@@ -271,16 +237,14 @@ namespace CBTools_Core.Extensions
         }
 
 
-        public static string? Style(string? style, string? value)
-        {
+        public static string? Style(string? style, string? value) {
             if (string.IsNullOrWhiteSpace(style) || string.IsNullOrWhiteSpace(value))
                 return null;
             else
                 return style + ": " + value + ";";
         }
 
-        public static class CSS
-        {
+        public static class CSS {
             public const string Height = "height";
             public const string Width = "width";
             public const string FontSize = "font-size";

@@ -1,28 +1,20 @@
 ﻿using CBTools_Core.Untyped;
-using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
-namespace CBTools_Core.Extensions
-{
-    public static class FloatExtensions
-    {
+namespace CBTools_Core.Extensions {
+    public static class FloatExtensions {
         //Float
         public static bool IsEven(this float x) => (x % 2) == 0;
 
         public static bool AsBool(this float x) => x != 0;
 
-        public static float Circular(this float num, float max, float min = 0)
-        {
+        public static float Circular(this float num, float max, float min = 0) {
             float diff = (max - min) + 1;
-            if (num < min)
-            {
+            if (num < min) {
                 while (num < min)
                     num += diff;
             }
-            else
-            {
+            else {
                 while (num > max)
                     num -= diff;
             }
@@ -33,8 +25,7 @@ namespace CBTools_Core.Extensions
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float FastInverseSquareRoot(float number)
-        {
+        public static float FastInverseSquareRoot(float number) {
             float x2 = number * 0.5f;
 
             int i = 0x5f375a86 - ((new Size4(number).asInt) >> 1);//Evil bit level hacking ;)
@@ -53,20 +44,20 @@ namespace CBTools_Core.Extensions
 
         public static bool AsBool(this double x) => x != 0;
 
-        public static double Circular(this double num, double max, double min = 0)
-        {
+        public static double Circular(this double num, double max, double min = 0) {
             double diff = (max - min) + 1;
-            if (num < min)
-            {
+            if (num < min) {
                 while (num < min)
                     num += diff;
             }
-            else
-            {
+            else {
                 while (num > max)
                     num -= diff;
             }
             return num;
         }
+
+
+
     }
 }

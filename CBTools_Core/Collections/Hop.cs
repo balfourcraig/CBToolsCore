@@ -1,14 +1,9 @@
-﻿using CBTools_Core.Extensions;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace CBTools_Core.Collections
-{
+namespace CBTools_Core.Collections {
     [StructLayout(LayoutKind.Explicit, Size = 6)]
-    public readonly struct Hop : IEquatable<Hop>
-    {
+    public readonly struct Hop : IEquatable<Hop> {
         [FieldOffset(0)]
         public readonly ushort from;
         [FieldOffset(2)]
@@ -24,21 +19,16 @@ namespace CBTools_Core.Collections
         /// <summary>
         /// Convert this struct to a single int32 for transport. Doing this will throw an exception if either from or to are less than 0
         /// </summary>
-        public int ToInt
-        {
-            get => fromTo | (expected ? (1 << 31) : 0) | (valid ? (1 << 15) : 0);
-        }
+        public int ToInt => fromTo | (expected ? (1 << 31) : 0) | (valid ? (1 << 15) : 0);
 
-        public void Deconstruct(out ushort from, out ushort to, out bool expected, out bool valid)
-        {
+        public void Deconstruct(out ushort from, out ushort to, out bool expected, out bool valid) {
             from = this.from;
             to = this.to;
             expected = this.expected;
             valid = this.valid;
         }
 
-        public Hop(ushort from, ushort to, bool expected = true, bool valid = true)
-        {
+        public Hop(ushort from, ushort to, bool expected = true, bool valid = true) {
             if (from > (ushort.MaxValue / 2) || to > (ushort.MaxValue / 2))
                 throw new ArgumentException("from or too too large");
             this.fromTo = 0;
@@ -48,8 +38,7 @@ namespace CBTools_Core.Collections
             this.valid = valid;
         }
 
-        public Hop(int compressed)
-        {
+        public Hop(int compressed) {
             this.fromTo = 0;
             expected = compressed < 0;
             valid = (compressed & (1 << 15)) >> 15 == 1;
@@ -69,8 +58,7 @@ namespace CBTools_Core.Collections
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        public static Hop FromInt(int i)
-        {
+        public static Hop FromInt(int i) {
             bool expected = i < 0;
             bool valid = (i & (1 << 15)) >> 15 == 1;
 
@@ -87,12 +75,11 @@ namespace CBTools_Core.Collections
 
         public override int GetHashCode() => ToInt;
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
+        public override bool Equals(object obj) {
+            if (obj == null) {
                 throw new NullReferenceException("Comparison to null");
-            else
-            {
+            }
+            else {
                 if (obj is Hop)
                     return this == (Hop)obj;
                 else
@@ -103,8 +90,13 @@ namespace CBTools_Core.Collections
         public Hop Reverse(bool expected, bool valid) => new Hop(this.to, this.from, expected, valid);
         public Hop Reverse() => new Hop(to, from, expected, valid);
 
-        public static bool operator == (Hop x, Hop Y) => x.ToInt == Y.ToInt;
-        public static bool operator != (Hop x, Hop Y) => x.ToInt != Y.ToInt;
+        public static bool operator ==(Hop x, Hop Y) {
+            return x.ToInt == Y.ToInt;
+        }
+
+        public static bool operator !=(Hop x, Hop Y) {
+            return x.ToInt != Y.ToInt;
+        }
 
         public bool Equals(Hop other) => this == other;
     }

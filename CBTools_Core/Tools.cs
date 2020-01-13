@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CBTools_Core
-{
-    public static class Tools
-    {
-        public static void RefSwap<T>(ref T x, ref T y)
-        {
+﻿namespace CBTools_Core {
+    public static class Tools {
+        public static void RefSwap<T>(ref T x, ref T y) {
             T z = x;
             x = y;
             y = z;

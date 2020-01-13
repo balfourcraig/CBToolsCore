@@ -1,30 +1,21 @@
 ﻿using System;
 
-namespace CBTools_Core
-{
+namespace CBTools_Core {
 #nullable disable
-    class Err<T> : IOption<T>, IEquatable<T>, IEquatable<Err<T>>, IEquatable<IOption<T>>
-    {
+    class Err<T> : IOption<T>, IEquatable<T>, IEquatable<Err<T>>, IEquatable<IOption<T>> {
         public readonly Exception ex;
 
         public string Message => ex.Message;
 
 
-        public bool HasValue(out T value)
-        {
+        public bool HasValue(out T value) {
             value = default;
             return false;
         }
 
-        public void Throw()
-        {
-            throw ex;
-        }
+        public void Throw() => throw ex;
 
-        public T Unwrap()
-        {
-            throw ex;
-        }
+        public T Unwrap() => throw ex;
 
         public bool Equals(T other) => false;
 
@@ -34,23 +25,17 @@ namespace CBTools_Core
 
         public override bool Equals(object obj) => false;
 
-        public override int GetHashCode()
-        {
-            return 0.GetHashCode();
-        }
+        public override int GetHashCode() => 0.GetHashCode();
 
-        public Err(Exception exception)
-        {
+        public Err(Exception exception) {
             this.ex = exception;
         }
 
-        public Err(string message)
-        {
+        public Err(string message) {
             this.ex = new Exception(message);
         }
 
-        public Err(string message, Exception innerException)
-        {
+        public Err(string message, Exception innerException) {
             this.ex = new Exception(message, innerException);
         }
 

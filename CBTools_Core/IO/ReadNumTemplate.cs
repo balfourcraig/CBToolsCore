@@ -1,316 +1,292 @@
 ﻿using System;
 
-namespace CBTools_Core.IO
-{
-	public static partial class ConsoleRead
-	{
-				public static Int16 ReadInt16 (bool showMessageIfInvalid = true)
-		{
-			if (Int16.TryParse(Console.ReadLine(), out Int16 result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Int16");
-				return ReadInt16(showMessageIfInvalid);
-			}
-		}
+namespace CBTools_Core.IO {
+    public static partial class ConsoleRead {
+        public static short ReadInt16(bool showMessageIfInvalid = true) {
+            if (short.TryParse(Console.ReadLine(), out short result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Int16");
+                return ReadInt16(showMessageIfInvalid);
+            }
+        }
 
-		public static Int16 ReadInt16(in Int16 max, bool showMessageIfInvalid = true)
-		{
-			if (Int16.TryParse(Console.ReadLine(), out Int16 result))
-			{
-				if(result <= max)
-					return result;
+        public static short ReadInt16(in short max, bool showMessageIfInvalid = true) {
+            if (short.TryParse(Console.ReadLine(), out short result)) {
+                if (result <= max)
+                    return result;
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Int16");
-            
-			return ReadInt16(max, showMessageIfInvalid);
-		}
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Int16");
+            }
 
-				public static Int32 ReadInt32 (bool showMessageIfInvalid = true)
-		{
-			if (Int32.TryParse(Console.ReadLine(), out Int32 result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Int32");
-				return ReadInt32(showMessageIfInvalid);
-			}
-		}
+            return ReadInt16(max, showMessageIfInvalid);
+        }
 
-		public static Int32 ReadInt32(in Int32 max, bool showMessageIfInvalid = true)
-		{
-			if (Int32.TryParse(Console.ReadLine(), out Int32 result))
-			{
-				if(result <= max)
-					return result;
+        public static int ReadInt32(bool showMessageIfInvalid = true) {
+            if (int.TryParse(Console.ReadLine(), out int result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Int32");
+                return ReadInt32(showMessageIfInvalid);
+            }
+        }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Int32");
-            
-			return ReadInt32(max, showMessageIfInvalid);
-		}
+        public static int ReadInt32(in int max, bool showMessageIfInvalid = true) {
+            if (int.TryParse(Console.ReadLine(), out int result)) {
+                if (result <= max)
+                    return result;
 
-				public static Int64 ReadInt64 (bool showMessageIfInvalid = true)
-		{
-			if (Int64.TryParse(Console.ReadLine(), out Int64 result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Int64");
-				return ReadInt64(showMessageIfInvalid);
-			}
-		}
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Int32");
+            }
 
-		public static Int64 ReadInt64(in Int64 max, bool showMessageIfInvalid = true)
-		{
-			if (Int64.TryParse(Console.ReadLine(), out Int64 result))
-			{
-				if(result <= max)
-					return result;
+            return ReadInt32(max, showMessageIfInvalid);
+        }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Int64");
-            
-			return ReadInt64(max, showMessageIfInvalid);
-		}
+        public static long ReadInt64(bool showMessageIfInvalid = true) {
+            if (long.TryParse(Console.ReadLine(), out long result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Int64");
+                return ReadInt64(showMessageIfInvalid);
+            }
+        }
 
-				public static UInt16 ReadUInt16 (bool showMessageIfInvalid = true)
-		{
-			if (UInt16.TryParse(Console.ReadLine(), out UInt16 result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not UInt16");
-				return ReadUInt16(showMessageIfInvalid);
-			}
-		}
+        public static long ReadInt64(in long max, bool showMessageIfInvalid = true) {
+            if (long.TryParse(Console.ReadLine(), out long result)) {
+                if (result <= max)
+                    return result;
 
-		public static UInt16 ReadUInt16(in UInt16 max, bool showMessageIfInvalid = true)
-		{
-			if (UInt16.TryParse(Console.ReadLine(), out UInt16 result))
-			{
-				if(result <= max)
-					return result;
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Int64");
+            }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a UInt16");
-            
-			return ReadUInt16(max, showMessageIfInvalid);
-		}
+            return ReadInt64(max, showMessageIfInvalid);
+        }
 
-				public static UInt32 ReadUInt32 (bool showMessageIfInvalid = true)
-		{
-			if (UInt32.TryParse(Console.ReadLine(), out UInt32 result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not UInt32");
-				return ReadUInt32(showMessageIfInvalid);
-			}
-		}
+        public static ushort ReadUInt16(bool showMessageIfInvalid = true) {
+            if (ushort.TryParse(Console.ReadLine(), out ushort result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not UInt16");
+                return ReadUInt16(showMessageIfInvalid);
+            }
+        }
 
-		public static UInt32 ReadUInt32(in UInt32 max, bool showMessageIfInvalid = true)
-		{
-			if (UInt32.TryParse(Console.ReadLine(), out UInt32 result))
-			{
-				if(result <= max)
-					return result;
+        public static ushort ReadUInt16(in ushort max, bool showMessageIfInvalid = true) {
+            if (ushort.TryParse(Console.ReadLine(), out ushort result)) {
+                if (result <= max)
+                    return result;
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a UInt32");
-            
-			return ReadUInt32(max, showMessageIfInvalid);
-		}
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a UInt16");
+            }
 
-				public static UInt64 ReadUInt64 (bool showMessageIfInvalid = true)
-		{
-			if (UInt64.TryParse(Console.ReadLine(), out UInt64 result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not UInt64");
-				return ReadUInt64(showMessageIfInvalid);
-			}
-		}
+            return ReadUInt16(max, showMessageIfInvalid);
+        }
 
-		public static UInt64 ReadUInt64(in UInt64 max, bool showMessageIfInvalid = true)
-		{
-			if (UInt64.TryParse(Console.ReadLine(), out UInt64 result))
-			{
-				if(result <= max)
-					return result;
+        public static uint ReadUInt32(bool showMessageIfInvalid = true) {
+            if (uint.TryParse(Console.ReadLine(), out uint result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not UInt32");
+                return ReadUInt32(showMessageIfInvalid);
+            }
+        }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a UInt64");
-            
-			return ReadUInt64(max, showMessageIfInvalid);
-		}
+        public static uint ReadUInt32(in uint max, bool showMessageIfInvalid = true) {
+            if (uint.TryParse(Console.ReadLine(), out uint result)) {
+                if (result <= max)
+                    return result;
 
-				public static Byte ReadByte (bool showMessageIfInvalid = true)
-		{
-			if (Byte.TryParse(Console.ReadLine(), out Byte result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Byte");
-				return ReadByte(showMessageIfInvalid);
-			}
-		}
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a UInt32");
+            }
 
-		public static Byte ReadByte(in Byte max, bool showMessageIfInvalid = true)
-		{
-			if (Byte.TryParse(Console.ReadLine(), out Byte result))
-			{
-				if(result <= max)
-					return result;
+            return ReadUInt32(max, showMessageIfInvalid);
+        }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Byte");
-            
-			return ReadByte(max, showMessageIfInvalid);
-		}
+        public static ulong ReadUInt64(bool showMessageIfInvalid = true) {
+            if (ulong.TryParse(Console.ReadLine(), out ulong result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not UInt64");
+                return ReadUInt64(showMessageIfInvalid);
+            }
+        }
 
-				public static SByte ReadSByte (bool showMessageIfInvalid = true)
-		{
-			if (SByte.TryParse(Console.ReadLine(), out SByte result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not SByte");
-				return ReadSByte(showMessageIfInvalid);
-			}
-		}
+        public static ulong ReadUInt64(in ulong max, bool showMessageIfInvalid = true) {
+            if (ulong.TryParse(Console.ReadLine(), out ulong result)) {
+                if (result <= max)
+                    return result;
 
-		public static SByte ReadSByte(in SByte max, bool showMessageIfInvalid = true)
-		{
-			if (SByte.TryParse(Console.ReadLine(), out SByte result))
-			{
-				if(result <= max)
-					return result;
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a UInt64");
+            }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a SByte");
-            
-			return ReadSByte(max, showMessageIfInvalid);
-		}
+            return ReadUInt64(max, showMessageIfInvalid);
+        }
 
-				public static Double ReadDouble (bool showMessageIfInvalid = true)
-		{
-			if (Double.TryParse(Console.ReadLine(), out Double result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Double");
-				return ReadDouble(showMessageIfInvalid);
-			}
-		}
+        public static byte ReadByte(bool showMessageIfInvalid = true) {
+            if (byte.TryParse(Console.ReadLine(), out byte result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Byte");
+                return ReadByte(showMessageIfInvalid);
+            }
+        }
 
-		public static Double ReadDouble(in Double max, bool showMessageIfInvalid = true)
-		{
-			if (Double.TryParse(Console.ReadLine(), out Double result))
-			{
-				if(result <= max)
-					return result;
+        public static byte ReadByte(in byte max, bool showMessageIfInvalid = true) {
+            if (byte.TryParse(Console.ReadLine(), out byte result)) {
+                if (result <= max)
+                    return result;
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Double");
-            
-			return ReadDouble(max, showMessageIfInvalid);
-		}
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Byte");
+            }
 
-				public static Single ReadSingle (bool showMessageIfInvalid = true)
-		{
-			if (Single.TryParse(Console.ReadLine(), out Single result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Single");
-				return ReadSingle(showMessageIfInvalid);
-			}
-		}
+            return ReadByte(max, showMessageIfInvalid);
+        }
 
-		public static Single ReadSingle(in Single max, bool showMessageIfInvalid = true)
-		{
-			if (Single.TryParse(Console.ReadLine(), out Single result))
-			{
-				if(result <= max)
-					return result;
+        public static sbyte ReadSByte(bool showMessageIfInvalid = true) {
+            if (sbyte.TryParse(Console.ReadLine(), out sbyte result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not SByte");
+                return ReadSByte(showMessageIfInvalid);
+            }
+        }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Single");
-            
-			return ReadSingle(max, showMessageIfInvalid);
-		}
+        public static sbyte ReadSByte(in sbyte max, bool showMessageIfInvalid = true) {
+            if (sbyte.TryParse(Console.ReadLine(), out sbyte result)) {
+                if (result <= max)
+                    return result;
 
-				public static Decimal ReadDecimal (bool showMessageIfInvalid = true)
-		{
-			if (Decimal.TryParse(Console.ReadLine(), out Decimal result))
-				return result;
-			else
-			{
-				if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Decimal");
-				return ReadDecimal(showMessageIfInvalid);
-			}
-		}
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a SByte");
+            }
 
-		public static Decimal ReadDecimal(in Decimal max, bool showMessageIfInvalid = true)
-		{
-			if (Decimal.TryParse(Console.ReadLine(), out Decimal result))
-			{
-				if(result <= max)
-					return result;
+            return ReadSByte(max, showMessageIfInvalid);
+        }
 
-				else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
-			}
-			else if (showMessageIfInvalid)
-					ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Decimal");
-            
-			return ReadDecimal(max, showMessageIfInvalid);
-		}
+        public static double ReadDouble(bool showMessageIfInvalid = true) {
+            if (double.TryParse(Console.ReadLine(), out double result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Double");
+                return ReadDouble(showMessageIfInvalid);
+            }
+        }
 
-			}
+        public static double ReadDouble(in double max, bool showMessageIfInvalid = true) {
+            if (double.TryParse(Console.ReadLine(), out double result)) {
+                if (result <= max)
+                    return result;
+
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Double");
+            }
+
+            return ReadDouble(max, showMessageIfInvalid);
+        }
+
+        public static float ReadSingle(bool showMessageIfInvalid = true) {
+            if (float.TryParse(Console.ReadLine(), out float result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Single");
+                return ReadSingle(showMessageIfInvalid);
+            }
+        }
+
+        public static float ReadSingle(in float max, bool showMessageIfInvalid = true) {
+            if (float.TryParse(Console.ReadLine(), out float result)) {
+                if (result <= max)
+                    return result;
+
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Single");
+            }
+
+            return ReadSingle(max, showMessageIfInvalid);
+        }
+
+        public static decimal ReadDecimal(bool showMessageIfInvalid = true) {
+            if (decimal.TryParse(Console.ReadLine(), out decimal result)) {
+                return result;
+            }
+            else {
+                if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not Decimal");
+                return ReadDecimal(showMessageIfInvalid);
+            }
+        }
+
+        public static decimal ReadDecimal(in decimal max, bool showMessageIfInvalid = true) {
+            if (decimal.TryParse(Console.ReadLine(), out decimal result)) {
+                if (result <= max)
+                    return result;
+
+                else if (showMessageIfInvalid)
+                    ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", TOO_HIGH);
+            }
+            else if (showMessageIfInvalid) {
+                ConsoleWrite.WriteLinesColored(ConsoleColor.Red, "Invalid input", "Not a Decimal");
+            }
+
+            return ReadDecimal(max, showMessageIfInvalid);
+        }
+
+    }
 }

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace CBTools_Core.Untyped
-{
+namespace CBTools_Core.Untyped {
     [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public readonly struct Size4 : IEquatable<Size4>, IEquatable<int>, IEquatable<uint>, IEquatable<float>
-    {
+    public readonly struct Size4 : IEquatable<Size4>, IEquatable<int>, IEquatable<uint>, IEquatable<float> {
         /// <summary>
         /// Interpret 4 bytes as Int32
         /// </summary>
@@ -26,22 +22,19 @@ namespace CBTools_Core.Untyped
         [FieldOffset(0)]
         public readonly float asFloat;
 
-        public Size4(int i)
-        {
+        public Size4(int i) {
             this.asFloat = default;
             this.asUInt = default;
             this.asInt = i;
         }
 
-        public Size4(uint ui)
-        {
+        public Size4(uint ui) {
             this.asFloat = default;
             this.asInt = default;
             this.asUInt = ui;
         }
 
-        public Size4(float f)
-        {
+        public Size4(float f) {
             this.asInt = default;
             this.asUInt = default;
             this.asFloat = f;
@@ -52,18 +45,39 @@ namespace CBTools_Core.Untyped
         public bool Equals(uint other) => this.asUInt == other;
         public bool Equals(float other) => this.asFloat == other;
 
-        public static bool operator ==(Size4 x, Size4 y) => x.asInt == y.asInt;
-        public static bool operator ==(Size4 x, int y) => x.asInt == y;
-        public static bool operator ==(Size4 x, uint y) => x.asUInt == y;
-        public static bool operator ==(Size4 x, float y) => x.asFloat == y;
+        public static bool operator ==(Size4 x, Size4 y) {
+            return x.asInt == y.asInt;
+        }
 
-        public static bool operator !=(Size4 x, Size4 y) => !(x.asInt == y.asInt);
-        public static bool operator !=(Size4 x, int y) => !(x.asInt == y);
-        public static bool operator !=(Size4 x, uint y) => !(x.asUInt == y);
-        public static bool operator !=(Size4 x, float y) => !(x.asFloat == y);
+        public static bool operator ==(Size4 x, int y) {
+            return x.asInt == y;
+        }
 
-        public override bool Equals(object obj)
-        {
+        public static bool operator ==(Size4 x, uint y) {
+            return x.asUInt == y;
+        }
+
+        public static bool operator ==(Size4 x, float y) {
+            return x.asFloat == y;
+        }
+
+        public static bool operator !=(Size4 x, Size4 y) {
+            return !(x.asInt == y.asInt);
+        }
+
+        public static bool operator !=(Size4 x, int y) {
+            return !(x.asInt == y);
+        }
+
+        public static bool operator !=(Size4 x, uint y) {
+            return !(x.asUInt == y);
+        }
+
+        public static bool operator !=(Size4 x, float y) {
+            return !(x.asFloat == y);
+        }
+
+        public override bool Equals(object obj) {
             if (obj == null)
                 return false;
             if (obj is Size4)
@@ -72,9 +86,6 @@ namespace CBTools_Core.Untyped
                 return false;
         }
 
-        public override int GetHashCode()
-        {
-            return asInt;
-        }
+        public override int GetHashCode() => asInt;
     }
 }

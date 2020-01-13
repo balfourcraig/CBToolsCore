@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace CBTools_Core.Extensions
-{
-    public static class CharExtensions
-    {
+namespace CBTools_Core.Extensions {
+    public static class CharExtensions {
         public static bool IsUpper(this char c) => char.IsUpper(c);
 
         public static bool IsLower(this char c) => char.IsLower(c);
@@ -27,16 +23,14 @@ namespace CBTools_Core.Extensions
 
         public static char ToUpper(this char c) => char.ToUpper(c);
 
-        public static char[] ToLower(this char[] c)
-        {
+        public static char[] ToLower(this char[] c) {
             for (int i = 0; i < c.Length; i++)
                 c[i] = c[i].ToLower();
 
             return c;
         }
 
-        public static char[] ToUpper(this char[] c)
-        {
+        public static char[] ToUpper(this char[] c) {
             for (int i = 0; i < c.Length; i++)
                 c[i] = c[i].ToUpper();
 

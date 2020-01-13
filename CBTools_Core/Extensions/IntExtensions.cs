@@ -1,23 +1,38 @@
 ﻿using CBTools_Core.Untyped;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace CBTools_Core.Extensions
-{
-    public static partial class IntExtensions
-    {
+namespace CBTools_Core.Extensions {
+    public static partial class IntExtensions {
+        public static string ToBinaryString(this ulong num) {
+            char[] chars = new char[64];
+            for (int i = 0; i < 64; i++) {
+                chars[chars.Length - 1 - i] = (char)(((num >> i) & 0b_1) + '0');
+            }
+            return new string(chars);
+        }
+
+        public static string ToBinaryString(this ulong num, char delimeter) {
+            char[] chars = new char[80];
+            for (int i = 0, inner = 0; inner < 64; i++, inner++) {
+                if (inner > 0 && inner % 4 == 0)
+                    chars[chars.Length - 1 - i++] = delimeter;
+                chars[chars.Length - 1 - i] = (char)(((num >> inner) & 0b_1) + '0');
+            }
+            chars[0] = delimeter;
+            return "0b" + new string(chars);
+        }
+
+
+
         //TODO: Fix this horrible mess
-        public static int Circular(this int num, int max, int min)
-        { 
+        public static int Circular(this int num, int max, int min) {
             int diff = (max - min) + 1;
-            if (num < min)
-            {
+            if (num < min) {
                 while (num < min)
                     num += diff;
             }
-            else
-            {
+            else {
                 while (num > max)
                     num -= diff;
             }
@@ -29,11 +44,30 @@ namespace CBTools_Core.Extensions
 
         //}
 
-        public static bool IsPowerOfTwo(this int num)
-        {
+        public static IEnumerable<int> To(this int start, int end, int step = 1) {
+            step = Math.Abs(step);
+            if (end < start) {
+                for (int i = start; i >= end; i -= step)
+                    yield return i;
+            }
+            else {
+                for (int i = start; i <= end; i += step)
+                    yield return i;
+            }
+        }
+
+        public static int GreatestCommonDivisor(this int x, int y) {
+            while (x != 0) {
+                int temp = x;
+                x = y % x;
+                y = temp;
+            }
+            return Math.Abs(y);
+        }
+
+        public static bool IsPowerOfTwo(this int num) {
             int bitCount = 0;
-            for (int i = 0; i < 31; i++)
-            {
+            for (int i = 0; i < 31; i++) {
                 bitCount += num & 1;
                 if (bitCount > 1) break;
                 num >>= i;
@@ -41,11 +75,9 @@ namespace CBTools_Core.Extensions
             return bitCount == 1;
         }
 
-        public static bool IsPowerOfTwo(this uint num)
-        {
+        public static bool IsPowerOfTwo(this uint num) {
             int bitCount = 0;
-            for (int i = 0; i < 32; i++)
-            {
+            for (int i = 0; i < 32; i++) {
                 bitCount += (int)num & 1;
                 if (bitCount > 1) break;
                 num >>= i;
@@ -53,11 +85,9 @@ namespace CBTools_Core.Extensions
             return bitCount == 1;
         }
 
-        public static bool IsPowerOfTwo(this long num)
-        {
+        public static bool IsPowerOfTwo(this long num) {
             int bitCount = 0;
-            for (int i = 0; i < 63; i++)
-            {
+            for (int i = 0; i < 63; i++) {
                 bitCount += (int)num & 1;
                 if (bitCount > 1) break;
                 num >>= i;
@@ -65,11 +95,9 @@ namespace CBTools_Core.Extensions
             return bitCount == 1;
         }
 
-        public static bool IsPowerOfTwo(this ulong num)
-        {
+        public static bool IsPowerOfTwo(this ulong num) {
             int bitCount = 0;
-            for (int i = 0; i < 64; i++)
-            {
+            for (int i = 0; i < 64; i++) {
                 bitCount += (int)num & 1;
                 if (bitCount > 1) break;
                 num >>= i;
@@ -98,13 +126,11 @@ namespace CBTools_Core.Extensions
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static int BitCount(this int num)
-        {
-            int count = (num >> 63) & 1;
+        public static int BitCount(this int num) {
+            int count = (num >> 31) & 1;
             num &= 0x_7fff_ffff;
 
-            while (num != 0)
-            {
+            while (num != 0) {
                 count += num & 1;
                 num >>= 1;
             }
@@ -116,17 +142,17 @@ namespace CBTools_Core.Extensions
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static long BitCountLong(this long num)
-        {
+        public static long BitCountLong(this long num) {
             long count = (num >> 63) & 1;
             num &= 0x_7fff_ffff_ffff_ffff;
 
-            while (num != 0)
-            {
+            while (num != 0) {
                 count += num & 1;
                 num >>= 1;
             }
             return count;
         }
+
+
     }
 }

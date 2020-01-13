@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CBTools_Core.Extensions
-{
-    public static partial class BoolExtensions
-    {
+﻿namespace CBTools_Core.Extensions {
+    public static partial class BoolExtensions {
         /// <summary>
         /// Returns 1 for true, 0 for false as float.
         /// Unless you specifically need a float, use AsInt
