@@ -153,6 +153,15 @@ namespace CBTools_Core.Extensions {
             return count;
         }
 
-
+        /// <summary>
+        /// Modulus which respects negative numbers. Significantly slower than standard % </br>
+        /// </summary>
+        /// <param name="lhs">Left hand side</param>
+        /// <param name="rhs">Right hand side. Devisor</param>
+        /// <returns></returns>
+        public static int FullMod(this int lhs, int rhs) {//=> (lhs % rhs + rhs) % rhs;
+            int r = lhs % rhs;
+            return r < 0 ? r + rhs : r;
+        }
     }
 }
