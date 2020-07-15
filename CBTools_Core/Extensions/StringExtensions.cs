@@ -119,5 +119,16 @@ namespace CBTools_Core.Extensions {
             }
             return new string(letters.Slice(0, count));
         }
+
+        const int upperMask = ~' ';
+        public static void ToUpperInline(this string s) {
+            unsafe {
+                fixed (char* c = s) {
+                    for (int i = 0; i < s.Length; i++) {
+                        *(c + i) = (char)((*(c + i)) & upperMask);
+                    }
+                }
+            }
+        }
     }
 }

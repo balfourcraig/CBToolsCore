@@ -75,6 +75,21 @@ namespace CBTools_Core {
         /// <returns></returns>
         public bool NextBool() => Next(100) % 2 == 0;//Kinda funky check here. Should be a little less predictable though
 
+        /// <summary>
+        /// Rearranges an array using golden ratio positioning. Modifies the original array!
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        public void ShuffleInplace<T>(T[] array) {
+            for (int n = array.Length - 1; n > 0; --n) {
+                int r = NextInt(0, n);
+                T temp = array[r];
+                array[r] = array[n - 1];
+                array[n - 1] = temp;
+            }
+            //return array;
+        }
 
         public (double x, double y) NextGausianPair(double xMean, double yMean, double xStdDev, double yStdDev) {
             double sq = Math.Sqrt(-2.0 * Math.Log(1.0 - Next()));

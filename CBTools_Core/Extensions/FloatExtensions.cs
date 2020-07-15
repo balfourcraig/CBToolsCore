@@ -1,4 +1,5 @@
 ﻿using CBTools_Core.Untyped;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace CBTools_Core.Extensions {
@@ -20,6 +21,8 @@ namespace CBTools_Core.Extensions {
             }
             return num;
         }
+
+        public static bool ApproxEquals(this float x, float y, float threshold = 0.00001f) => Math.Abs(x - y) < threshold;
 
         public static int ReinterpretAsInt(this float n) => new Size4(n).asInt;
 
@@ -45,6 +48,8 @@ namespace CBTools_Core.Extensions {
         public static bool AsBool(this double x) => x != 0;
 
         public static double Circular(this double num, double max, double min = 0) {
+            
+            
             double diff = (max - min) + 1;
             if (num < min) {
                 while (num < min)
@@ -57,7 +62,7 @@ namespace CBTools_Core.Extensions {
             return num;
         }
 
-
+        public static bool ApproxEquals(this double x, double y, double threshold = 0.00001) => Math.Abs(x - y) < threshold;
 
     }
 }

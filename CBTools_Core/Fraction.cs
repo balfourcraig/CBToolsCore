@@ -178,11 +178,7 @@ namespace CBTools_Core {
             return (lhs.num * rhs.den) <= (rhs.num * lhs.den);
         }
 
-        public override string ToString() {
-            if (den == 1)
-                return num.ToString();
-            return num + "/" + den;
-        }
+        public override string ToString() => den == 1 ? num.ToString() : num + "/" + den;
 
         private static readonly Dictionary<double, Fraction> lookupTable = new Dictionary<double, Fraction>() {
             {1.0 / 2, new Fraction(1, 2)},

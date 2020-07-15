@@ -3,46 +3,6 @@ using System.Collections.Generic;
 
 namespace CBTools_Core.Extensions {
     public static class NumToString {
-        private static readonly string[] ones =
-        {
-            "zero",
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-            "six",
-            "seven",
-            "eight",
-            "nine"
-        };
-        private static readonly string[] prefixes =
-        {
-            "ten",
-            "eleven",
-            "twelve",
-            "thir",
-            "four",
-            "fif",
-            "six",
-            "seven",
-            "eigh",
-            "nine"
-        };
-        private static readonly string[] powers =
-        {
-            "m",
-            "b",
-            "tr",
-            "quadr",
-            "qulong",
-            "sext",
-            "sept",
-            //"oct",
-            //"non",
-            //"dec"
-        };
-
         public static string SpellOut(this int num) => ((long)num).SpellOut();
 
         public static string SpellOut(this long num) {
@@ -119,5 +79,45 @@ namespace CBTools_Core.Extensions {
             else
                 return (OneDigit(n1).Item1 + " hundred and " + TwoDigits(n2, n3).Item1, 3);
         }
+
+        private static readonly string[] ones =
+        {
+            "zero",
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+            "six",
+            "seven",
+            "eight",
+            "nine"
+        };
+        private static readonly string[] prefixes =
+        {
+            "ten",
+            "eleven",
+            "twelve",
+            "thir",
+            "four",
+            "fif",
+            "six",
+            "seven",
+            "eigh",
+            "nine"
+        };
+        private static readonly string[] powers =
+        {
+            "m",
+            "b",
+            "tr",
+            "quadr",
+            "qulong",
+            "sext",
+            "sept",
+            //"oct",
+            //"non",
+            //"dec"
+        };
     }
 }

@@ -2,7 +2,58 @@
 
 namespace CBTools_Core.Extensions {
     public static class RandomExtensions {
+        private static string NameSegment(this Random rand, int maxLength) {
+            string name = consonants.Random();
+            for (int i = 0; i < rand.Next(1, maxLength); i++) {
+                name += vowels.Random() + consonants.Random();
+            }
+            name = name[0] + name.ToLowerInvariant().Substring(1);
+            return name;
+        }
 
+        /// <summary>
+        /// Generates a random, vaguely plausible sounding firstname
+        /// </summary>
+        /// <param name="rand"></param>
+        /// <returns></returns>
+        public static string NextFirstName(this Random rand) {
+            string name = rand.NameSegment(3);
+            return name;
+        }
+
+        /// <summary>
+        /// Generates a random, vaguely plausible sounding surname
+        /// </summary>
+        /// <param name="rand"></param>
+        /// <param name="allowPrefix">Whether prefixes such as Mc are allowed. Even when true, only 20% of names will have this</param>
+        /// <param name="allowHyphen">Whether hyphenated names are allowed. Even when true, only 15% of names will be hyphenated</param>
+        /// <returns></returns>
+        public static string NextSurname(this Random rand, bool allowPrefix = true, bool allowHyphen = true) {
+            string name = rand.NameSegment(3);
+            if (rand.NextDouble() < 0.8)
+                name += surnameSuffixes.Random();
+
+            name = name[0] + name.ToLowerInvariant().Substring(1);
+
+            if (allowPrefix && rand.NextDouble() < 0.2)
+                name = surnamePrefixes.Random() + name;
+
+            if (allowHyphen && rand.NextDouble() < 0.15)
+                name += "-" + rand.NextSurname(false, false);
+
+            return name;
+        }
+
+        /// <summary>
+        /// Generates a random, vaguely plausible firstname surname combination
+        /// </summary>
+        /// <param name="rand"></param>
+        /// <returns></returns>
+        public static string NextName(this Random rand) {
+            string firstname = rand.NextFirstName();
+            string surname = rand.NextSurname();
+            return firstname + " " + surname;
+        }
 
         /// <summary>
         /// Generates a pair of random numbers with Gausian distribution by Box-Muller transformation
@@ -63,7 +114,8 @@ namespace CBTools_Core.Extensions {
         /// </summary>
         /// <param name="rand"></param>
         /// <returns></returns>
-        public static bool NextBool(this Random rand) => rand.NextDouble() >= 0.5;
+        public static bool NextBool(this Random rand) => rand.Next() % 2 == 0;//may be slightly more fair than > 0.5
+        public static bool NextBool(this Random rand, double chance) => rand.NextDouble() < chance;//may be slightly more fair than > 0.5
 
         /// <summary>
         /// Gets a random char from a-z
@@ -92,14 +144,114 @@ namespace CBTools_Core.Extensions {
             return new string(letters);
         }
 
-        public static float NextFloat(this Random rand, float min, float max) {
-            float diff = max - min;
-            return (float)rand.NextDouble() * diff + min;
-        }
+        public static float NextFloat(this Random rand, float min, float max) => (float)NextDouble(rand, min, max);
 
         public static double NextDouble(this Random rand, double min, double max) {
             double diff = max - min;
             return rand.NextDouble() * diff + min;
         }
+
+        private static readonly string[] surnameSuffixes = new string[]{
+            "BERG",
+            "HILL",
+            "WARD",
+            "WOOD",
+            "Y",
+            "SON",
+            "S",
+            "O",
+            "I",
+            "A",
+            "HAM",
+            "ER",
+            "ERS",
+            "LER",
+            "NER",
+            "SOV",
+            "NOV",
+            "LOV",
+            "SKI",
+            "VIC",
+            "OVA",
+            "OV",
+            "SEN",
+            "GAARD",
+            "NEN",
+            "HOLM",
+            "TINEZ",
+            "MANN",
+            "AZ",
+            "EZ",
+            "SKAS",
+            "EIRA",
+            "TON",
+            "ALD",
+
+        };
+
+        private static readonly string[] surnamePrefixes = new string[]{
+            "Mc\"",
+            "Mac",
+            "Von ",
+            "Van ",
+            "De ",
+            "O\'",
+            "Van Der ",
+
+        };
+
+        private static readonly string[] vowels = new string[]{
+            "A",
+            "E",
+            "I",
+            "O",
+            "U",
+            "Y",
+            "OU",
+            "EE",
+            "AI",
+            "AE",
+            "OO",
+            "IE",
+            "EI",
+            "AU",
+            "IE"
+        };
+
+        private static readonly string[] consonants = new string[]{
+            "B",
+            "C",
+            "D",
+            "F",
+            "G",
+            "H",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "P",
+            "QU",
+            "R",
+            "S",
+            "T",
+            "V",
+            "W",
+            "Y",
+            "Z",
+            "SH",
+            "TH",
+            "CH",
+            "PH",
+            "SON",
+            "ING",
+            "GR",
+            "CR",
+            "SW",
+            "BR",
+            "DR",
+            "FL",
+            "SC"
+        };
     }
 }

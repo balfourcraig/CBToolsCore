@@ -13,11 +13,11 @@ Extensions for char to match strings (to upper etc). Strip characters from strin
 
 And many, many more!</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.8</Version>
-    <PackageReleaseNotes>Added Fraction struct. Stores fractions as numerator/denominator pairs, both of which are integers. Provides overrides for the common operators, and implicit/explicit casts where expected. This is mostly an interest thing, the ones in System.Numerics and other math libraries will be better.
-Added a MapAction extension method similar to ForEach, except that it enumerates the list right away</PackageReleaseNotes>
-    <AssemblyVersion>1.0.8.0</AssemblyVersion>
-    <FileVersion>1.0.8.0</FileVersion>
+    <Version>1.0.9</Version>
+    <PackageReleaseNotes>Added random name generation to Random class.
+Added FullMod to handle negative modulo</PackageReleaseNotes>
+    <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <FileVersion>1.0.9.0</FileVersion>
     <PackageId>CBTools_Core</PackageId>
     <Product>CBTools_Core</Product>
     <AssemblyName>CBTools_Core</AssemblyName>

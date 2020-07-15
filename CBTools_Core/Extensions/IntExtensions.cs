@@ -23,21 +23,18 @@ namespace CBTools_Core.Extensions {
             return "0b" + new string(chars);
         }
 
-
-
-        //TODO: Fix this horrible mess
-        public static int Circular(this int num, int max, int min) {
-            int diff = (max - min) + 1;
-            if (num < min) {
-                while (num < min)
-                    num += diff;
-            }
-            else {
-                while (num > max)
-                    num -= diff;
-            }
-            return num;
+        /// <summary>
+        /// Modulus which respects negative numbers. Significantly slower than standard % </br>
+        /// </summary>
+        /// <param name="lhs">Left hand side</param>
+        /// <param name="rhs">Right hand side. Devisor</param>
+        /// <returns></returns>
+        public static int FullMod(this int lhs, int rhs) {
+            int r = lhs % rhs;
+            return r < 0 ? r + rhs : r;
         }
+
+        public static int Circular(this int num, int max, int min) => num.FullMod(max - min) + min;
 
         //public static int Circular(this int num, int max)
         //{
@@ -65,45 +62,13 @@ namespace CBTools_Core.Extensions {
             return Math.Abs(y);
         }
 
-        public static bool IsPowerOfTwo(this int num) {
-            int bitCount = 0;
-            for (int i = 0; i < 31; i++) {
-                bitCount += num & 1;
-                if (bitCount > 1) break;
-                num >>= i;
-            }
-            return bitCount == 1;
-        }
+        public static bool IsPowerOfTwo(this int num) => num.BitCount() == 1;
 
-        public static bool IsPowerOfTwo(this uint num) {
-            int bitCount = 0;
-            for (int i = 0; i < 32; i++) {
-                bitCount += (int)num & 1;
-                if (bitCount > 1) break;
-                num >>= i;
-            }
-            return bitCount == 1;
-        }
+        public static bool IsPowerOfTwo(this uint num) => ((long)num).BitCountLong() == 1;
 
-        public static bool IsPowerOfTwo(this long num) {
-            int bitCount = 0;
-            for (int i = 0; i < 63; i++) {
-                bitCount += (int)num & 1;
-                if (bitCount > 1) break;
-                num >>= i;
-            }
-            return bitCount == 1;
-        }
+        public static bool IsPowerOfTwo(this long num) => num.BitCountLong() == 1;
 
-        public static bool IsPowerOfTwo(this ulong num) {
-            int bitCount = 0;
-            for (int i = 0; i < 64; i++) {
-                bitCount += (int)num & 1;
-                if (bitCount > 1) break;
-                num >>= i;
-            }
-            return bitCount == 1;
-        }
+        public static bool IsPowerOfTwo(this ulong num) => ((long)num).BitCountLong() == 1;
 
         //public static unsafe float ReinterpretAsFloat(this int n) => *(float*)&n;
         /// <summary>
@@ -142,26 +107,16 @@ namespace CBTools_Core.Extensions {
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static long BitCountLong(this long num) {
+        public static int BitCountLong(this long num) {
             long count = (num >> 63) & 1;
             num &= 0x_7fff_ffff_ffff_ffff;
-
             while (num != 0) {
                 count += num & 1;
                 num >>= 1;
             }
-            return count;
+            return (int)count;
         }
 
-        /// <summary>
-        /// Modulus which respects negative numbers. Significantly slower than standard % </br>
-        /// </summary>
-        /// <param name="lhs">Left hand side</param>
-        /// <param name="rhs">Right hand side. Devisor</param>
-        /// <returns></returns>
-        public static int FullMod(this int lhs, int rhs) {//=> (lhs % rhs + rhs) % rhs;
-            int r = lhs % rhs;
-            return r < 0 ? r + rhs : r;
-        }
+       
     }
 }
