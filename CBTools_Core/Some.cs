@@ -62,5 +62,7 @@ namespace CBTools_Core {
         public Some(T value) {
             this.value = value;
         }
+
+        public static Some<T> New(T value) => new Some<T>(value);
     }
 }

@@ -42,5 +42,7 @@ namespace CBTools_Core {
         public override string ToString() => "Err<" + typeof(T) + "> contains " + ex.Message;
 
         public T ValueOrDefault() => default;
+
+        public static Err<T> New(string message) => new Err<T>(message);
     }
 }

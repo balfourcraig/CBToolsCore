@@ -29,70 +29,34 @@ namespace CBTools_Core.Untyped {
         }
 
         public Size1(byte b) {
-            this.asBool = default;
-            this.asSByte = default;
-            this.asByte = b;
+            asBool = default;
+            asSByte = default;
+            asByte = b;
 
         }
 
         public Size1(sbyte b) {
-            this.asByte = default;
-            this.asBool = default;
-            this.asSByte = b;
+            asByte = default;
+            asBool = default;
+            asSByte = b;
         }
 
-        public bool Equals(Size1 other) => other.asByte == this.asByte;
+        public bool Equals(Size1 other) => other.asByte == asByte;
+        public bool Equals(bool other) => other == asBool;
+        public bool Equals(byte other) => other == asByte;
+        public bool Equals(sbyte other) => other == asSByte;
 
-        public bool Equals(bool other) => other == this.asBool;
-
-        public bool Equals(byte other) => other == this.asByte;
-
-        public bool Equals(sbyte other) => other == this.asSByte;
-
-        public static bool operator ==(Size1 x, Size1 y) {
-            return x.asByte == y.asByte;
-        }
-
-        public static bool operator !=(Size1 x, Size1 y) {
-            return !(x.asByte == y.asByte);
-        }
-
-        public static bool operator ==(Size1 x, bool y) {
-            return x.asBool == y;
-        }
-
-        public static bool operator ==(Size1 x, byte y) {
-            return x.asByte == y;
-        }
-
-        public static bool operator ==(Size1 x, sbyte y) {
-            return x.asSByte == y;
-        }
-
-        public static bool operator !=(Size1 x, bool y) {
-            return !(x.asBool == y);
-        }
-
-        public static bool operator !=(Size1 x, byte y) {
-            return !(x.asByte == y);
-        }
-
-        public static bool operator !=(Size1 x, sbyte y) {
-            return !(x.asSByte == y);
-        }
+        public static bool operator ==(Size1 x, Size1 y) => x.asByte == y.asByte;
+        public static bool operator !=(Size1 x, Size1 y) => !(x.asByte == y.asByte);
+        public static bool operator ==(Size1 x, bool y) => x.asBool == y;
+        public static bool operator ==(Size1 x, byte y) => x.asByte == y;
+        public static bool operator ==(Size1 x, sbyte y) => x.asSByte == y;
+        public static bool operator !=(Size1 x, bool y) => !(x.asBool == y);
+        public static bool operator !=(Size1 x, byte y) => !(x.asByte == y);
+        public static bool operator !=(Size1 x, sbyte y) => !(x.asSByte == y);
 
         public override int GetHashCode() => asByte;
 
-        public override bool Equals(object obj) {
-            if (obj == null) {
-                return false;
-            }
-            else if (obj is Size1) {
-                return this == (Size1)obj;
-            }
-            else {
-                return false;
-            }
-        }
+        public override bool Equals(object obj) => obj != null && obj is Size1 size && this == size;
     }
 }

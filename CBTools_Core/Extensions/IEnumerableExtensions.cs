@@ -32,7 +32,6 @@ namespace CBTools_Core.Extensions {
         public static IEnumerable<T> Interweave<T>(this IEnumerable<T> array, bool useRandomStart = true) {
             double randState = useRandomStart ? ArrayExtensions.defaultRand.NextDouble() : 0;
             var list = array.ToList();
-
             for (int i = list.Count - 1; i >= 0; i--) {
                 randState = (randState + goldenRatioReciprocal) % 1.0;
                 yield return list[(int)Math.Floor(randState * list.Count)];
@@ -133,18 +132,118 @@ namespace CBTools_Core.Extensions {
                 throw new Exception("Sequence contains no elements");
         }
 
-        public static IEnumerable<T> Map<T>(this IEnumerable<T> list, Func<T, T> func) {
+        /// <summary>
+        /// Applies a function to each element in a collection sequentially and yields the results
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static IEnumerable<TOut> Map<TIn, TOut>(this IEnumerable<TIn> list, Func<TIn, TOut> func) {
             if (list == null || func == null)
                 throw new ArgumentNullException();
 
             return Map();
 
-            IEnumerable<T> Map() {
-                foreach (T t in list)
+            IEnumerable<TOut> Map() {
+                foreach (TIn t in list)
                     yield return func(t);
             }
         }
 
+        /// <summary>
+        /// Applies a void function (Action) to each element in a collection sequentially
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="func"></param>
+        public static void Map<T>(this IEnumerable<T> list, Action<T> func) {
+            if (list == null || func == null)
+                throw new ArgumentNullException();
+
+            foreach (T t in list)
+                func(t);
+        }
+
+        /// <summary>
+        /// Applies and awaits an async function to each element in a collection sequentially, and returns their results in a new list
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static async Task<IEnumerable<TOut>> MapAsync<TIn, TOut>(this IEnumerable<TIn> list, Func<TIn, Task<TOut>> func) {
+            if (list == null || func == null)
+                throw new ArgumentNullException();
+
+            var results = new List<TOut>();
+            foreach (TIn t in list)
+                results.Add(await func(t));
+            return results;
+        }
+
+        /// <summary>
+        /// Applies and awaits an asynct Task function (Action) to each element in a collection sequentially
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static async Task MapAsync<TIn>(this IEnumerable<TIn> list, Func<TIn, Task> func) {
+            if (list == null || func == null)
+                throw new ArgumentNullException();
+
+            foreach (TIn t in list)
+                await func(t);
+        }
+
+        /// <summary>
+        /// Applies an async function to each element and returns the results. The order of the new list is the order in which the tasks completed, NOT the order of the initial list
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static async Task<IEnumerable<TOut>> MapUnorderedAsync<TIn, TOut>(this IEnumerable<TIn> list, Func<TIn, Task<TOut>> func) {
+            if (list == null || func == null)
+                throw new ArgumentNullException();
+
+            var tasks = new List<Task<TOut>>();
+            foreach(TIn t in list) {
+                tasks.Add(func(t));
+            }
+
+            var results = new List<TOut>(tasks.Count);
+            Task<TOut> completed;
+            while (tasks.Any()) {
+                completed = await Task.WhenAny(tasks);
+                results.Add(completed.Result);
+                tasks.Remove(completed);
+            }
+            return results;
+        }
+
+        /// <summary>
+        /// Applies an async Task function (Action) to each element. The tasks run in parallel, the original list order is NOT preserved
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static async Task MapUnorderedAsync<TIn>(this IEnumerable<TIn> list, Func<TIn, Task> func) {
+            if (list == null || func == null)
+                throw new ArgumentNullException();
+
+            var tasks = new List<Task>();
+            foreach (TIn t in list) {
+                tasks.Add(func(t));
+            }
+            await Task.WhenAll(tasks);
+        }
 
         /// <summary>
         /// Enumerates the list and applies the given action to each element.
@@ -152,6 +251,7 @@ namespace CBTools_Core.Extensions {
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <param name="action"></param>
+        [Obsolete("Use Map now, which has an overload of the same signature, for consistency")]
         public static void MapAction<T>(this IEnumerable<T> list, Action<T> action) {
             if (list == null || action == null)
                 throw new ArgumentNullException();
@@ -168,9 +268,9 @@ namespace CBTools_Core.Extensions {
         /// <param name="newLine"></param>
         public static void Print<T>(this IEnumerable<T> list, bool newLine = true) {
             if (newLine)
-                list.MapAction(x => Console.WriteLine(x));
+                list.Map(x => Console.WriteLine(x));
             else
-                list.MapAction(x => Console.Write(x));
+                list.Map(x => Console.Write(x));
         }
 
         public static IEnumerable<T> ConcatMany<T>(this IEnumerable<T> list, params IEnumerable<T>[] lists) {
@@ -183,11 +283,20 @@ namespace CBTools_Core.Extensions {
             }
         }
 
+        /// <summary>
+        /// Returns true if more than count objects are in the list. Short curcuits, so useful with large lists
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public static bool CountGreaterThan<T>(this IEnumerable<T> list, int count) {
             int i = 1;
             foreach (T t in list) {
-                if (i > count) return true;
-                else i++;
+                if (i > count)
+                    return true;
+                else
+                    i++;
             }
             return false;
         }

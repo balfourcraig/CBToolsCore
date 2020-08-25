@@ -45,46 +45,16 @@ namespace CBTools_Core.Untyped {
         public bool Equals(ushort other) => this.asUShort == other;
         public bool Equals(char other) => this.asChar == other;
 
-        public static bool operator ==(Size2 x, Size2 y) {
-            return x.asUShort == y.asUShort;
-        }
+        public static bool operator ==(Size2 x, Size2 y) => x.asUShort == y.asUShort;
+        public static bool operator ==(Size2 x, short y) => x.asShort == y;
+        public static bool operator ==(Size2 x, ushort y) => x.asUShort == y;
+        public static bool operator ==(Size2 x, char y) => x.asChar == y;
+        public static bool operator !=(Size2 x, Size2 y)=> !(x.asUShort == y.asUShort);
+        public static bool operator !=(Size2 x, short y) => !(x.asShort == y);
+        public static bool operator !=(Size2 x, ushort y) => !(x.asUShort == y);
+        public static bool operator !=(Size2 x, char y) => !(x.asChar == y);
 
-        public static bool operator ==(Size2 x, short y) {
-            return x.asShort == y;
-        }
-
-        public static bool operator ==(Size2 x, ushort y) {
-            return x.asUShort == y;
-        }
-
-        public static bool operator ==(Size2 x, char y) {
-            return x.asChar == y;
-        }
-
-        public static bool operator !=(Size2 x, Size2 y) {
-            return !(x.asUShort == y.asUShort);
-        }
-
-        public static bool operator !=(Size2 x, short y) {
-            return !(x.asShort == y);
-        }
-
-        public static bool operator !=(Size2 x, ushort y) {
-            return !(x.asUShort == y);
-        }
-
-        public static bool operator !=(Size2 x, char y) {
-            return !(x.asChar == y);
-        }
-
-        public override bool Equals(object obj) {
-            if (obj == null)
-                return false;
-            if (obj is Size2)
-                return this == (Size2)obj;
-            else
-                return false;
-        }
+        public override bool Equals(object obj) => obj == null ? false : obj is Size2 size && this == size;
 
         public override int GetHashCode() => asShort;
     }

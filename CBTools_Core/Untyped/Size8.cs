@@ -45,25 +45,15 @@ namespace CBTools_Core.Untyped {
         public bool Equals(ulong other) => asULong == other;
         public bool Equals(double other) => asDouble == other;
 
-        public static bool operator ==(Size8 x, Size8 y) {
-            return x.asLong == y.asLong;
-        }
+        public static bool operator ==(Size8 x, Size8 y) => x.asLong == y.asLong;
 
-        public static bool operator ==(Size8 x, long y) {
-            return x.asLong == y;
-        }
+        public static bool operator ==(Size8 x, long y) => x.asLong == y;
 
-        public static bool operator ==(Size8 x, ulong y) {
-            return x.asULong == y;
-        }
+        public static bool operator ==(Size8 x, ulong y) => x.asULong == y;
 
-        public static bool operator ==(Size8 x, double y) {
-            return x.asDouble == y;
-        }
+        public static bool operator ==(Size8 x, double y) => x.asDouble == y;
 
-        public static bool operator !=(Size8 x, Size8 y) {
-            return !(x.asLong == y.asLong);
-        }
+        public static bool operator !=(Size8 x, Size8 y) => !(x.asLong == y.asLong);
 
         public static bool operator !=(Size8 x, long y) {
             return !(x.asLong == y);

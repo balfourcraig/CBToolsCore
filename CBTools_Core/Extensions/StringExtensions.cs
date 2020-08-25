@@ -121,7 +121,7 @@ namespace CBTools_Core.Extensions {
         }
 
         const int upperMask = ~' ';
-        public static void ToUpperInline(this string s) {
+        private static void ToUpperInline(this string s) {
             unsafe {
                 fixed (char* c = s) {
                     for (int i = 0; i < s.Length; i++) {
@@ -129,6 +129,20 @@ namespace CBTools_Core.Extensions {
                     }
                 }
             }
+        }
+
+        public const double phi = 1.618033988749894848204586834365638117720309179805762862135448622f;
+        /// <summary>
+        /// Hashes a string to a double evenly distributed between 0 and 1
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static double HashToDouble(this string s, double seed = 0) {
+            double hash = seed/phi;
+            for (int i = 0; i < s.Length; i++) {
+                hash += phi * (phi / (i + phi)) * s[i];
+            }
+            return hash % 1;
         }
     }
 }

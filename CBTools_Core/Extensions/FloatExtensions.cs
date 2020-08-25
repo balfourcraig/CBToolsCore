@@ -38,6 +38,25 @@ namespace CBTools_Core.Extensions {
             return number * (1.5f - (x2 * number * number));
         }
 
+        /// <summary>
+        /// Rounds to the nearest integer, rather than just truncating
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static int RoundToInt(this float num) => (int)(num + 0.5f);
+
+        /// <summary>
+        /// Bias numbers towards small values
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="bias">0 is linear, closer to 1 will favour low numbers</param>
+        /// <returns></returns>
+        public static float Bias(this float x, float bias) {
+            //adjust input to make control feel more linear
+            double k = Math.Pow(1 - bias, 3);
+            return (float)((x * k) / (x * k - x + 1));
+        }
+
 
         //Double
         //public static unsafe long ReinterpretAsLong(this double n) => *(long*)&n;
@@ -64,5 +83,11 @@ namespace CBTools_Core.Extensions {
 
         public static bool ApproxEquals(this double x, double y, double threshold = 0.00001) => Math.Abs(x - y) < threshold;
 
+        /// <summary>
+        /// Rounds to the nearest integer, rather than just truncating
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static int RoundToInt(this double num) => (int)(num + 0.5);
     }
 }
